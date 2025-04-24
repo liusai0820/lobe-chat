@@ -87,7 +87,7 @@ export default memo(() => {
       // not existing, or the user not having the correct role.
       // In some cases, you may want to redirect to a custom error
       if (error instanceof AuthError) {
-        return router.push(`/next-auth/?error=${error.type}`);
+        return router.push(`/next-auth/?error=auth_error`);
       }
 
       // Otherwise if a redirects happens Next.js can handle it

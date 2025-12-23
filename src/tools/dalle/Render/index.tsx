@@ -29,20 +29,29 @@ const DallE = memo<BuiltinRenderProps<DallEImageItem[]>>(({ content, messageId }
     <Flexbox gap={16}>
       {/* 没想好工具条的作用 */}
       {/*<ToolBar content={content} messageId={messageId} />*/}
+    <PreviewGroup
       preview={{
-        // 1. 将 onChange 改名为 countChange，这通常是新版组件的正确 API
+        // 1. 确保使用 countChange
         countChange: (current: number) => {
           currentRef.current = current;
         },
-        // 2. 只保留这一个 onVisibleChange，删除多余的那个
+        // 2. 确保 onVisibleChange 只出现一次
         onVisibleChange: (visible: boolean, _prevVisible: boolean, current: number) => {
           currentRef.current = current;
         },
         toolbarAddon: <ActionIcon color={'#fff'} icon={Download} onClick={handleDownload} />,
-      } as any} // 3. 将 as any 放在这个位置，确保跳过所有潜在的类型检查
+      } as any} // ✅ 这里是关键：大括号 -> 空格 -> as any -> 大括号
+    >
+
+
+      
       >
-        <GalleyGrid items={content.map((c) => ({ ...c, messageId }))} renderItem={ImageItem} />
+        <GalleyGrid 
+          items={content.map((c) => ({ ...c, messageId }))} 
+          renderItem={ImageItem} 
+        />
       </PreviewGroup>
+    
     </Flexbox>
   );
 });
